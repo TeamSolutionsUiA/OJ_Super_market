@@ -13,11 +13,10 @@ import supermarket.Customer;
 
 /**
  * Pops the first Customer from Queue in Checkout, and calculates duration of checkout for customer.
- * Creates new checkout event if there are still Customers in the queue, after the
- * current customer has been processed. 
- * 
+ * Creates new CheckoutEvent to proccess the next customer in queue (if any) after current customer has been processed. 
+ * Creates a CheckoutCompletedEvent for each proccesssed customer
  *
- * @author evenal
+ * @author evenal & Jonathan & OC
  */
 public class CheckoutEvent extends Event {
     Checkout checkout;
@@ -32,7 +31,7 @@ public class CheckoutEvent extends Event {
     @Override
     public Event happen() {
 	if (checkout.queue.isEmpty())
-	    return null;
+	    return null; //the queue is empty, nothing to proccess
 	
         // Sjekke kølengden og oppdatere høyeste kølengde.:
         int queueLength = checkout.queue.size();
@@ -50,6 +49,7 @@ public class CheckoutEvent extends Event {
         customer.checkoutTime = getTime() + customer.checkoutDuration;
         customer.leaveTime = customer.checkoutTime + 10;
         
+	checkout.highestQueueDuration = Math.max(checkout.highestQueueDuration, customer.queueWaitDuration);
         checkout.totalQueueDuration += customer.queueWaitDuration;
         checkout.totalCheckoutDuration += customer.checkoutDuration;
         
@@ -62,7 +62,7 @@ public class CheckoutEvent extends Event {
 
     @Override
     public String toString() {
-      return "bø";  
+      return "CheckoutEvent: " + checkout.name;  
     }
 
 }

@@ -9,9 +9,9 @@ import eventsim.Event;
 
 
 /**
- * A customer enters the shop
+ * A customer is done with the checkout. The checkout is cleared of an active customer.
  *
- * @author evenal
+ * @author Jonathan & OC
  */
 public class CheckoutCompletedEvent extends Event {
     Customer customer;

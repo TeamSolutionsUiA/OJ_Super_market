@@ -30,7 +30,7 @@ public class Checkout {
     int totalQueueDuration;
     int totalCheckoutDuration;
     int totalQueueLength;
-
+    int highestQueueDuration;
 
     public Checkout(SuperMarket shop, int i) {
         this.shop = shop;
@@ -41,7 +41,23 @@ public class Checkout {
     public Queue<Customer> getQueue() {
         return queue;
     }
-
+    
+    public float averageQueueLengh() {
+	return (float) totalQueueLength / customerCount;
+    }
+    
+    public float averageQueueDuration() {
+	return (float) totalQueueDuration / customerCount;
+    }
+    
+    public float averageCheckoutDuration() {
+	return (float) totalCheckoutDuration / customerCount;
+    }
+    
+    public float averageTotalDuration() {
+	return (float) (totalQueueDuration + totalCheckoutDuration) / customerCount;
+    }
+    
     public static int getPROD_DURATION() {
         return PROD_DURATION;
     }
@@ -50,4 +66,13 @@ public class Checkout {
         return PAY_DURATION;
     }
     
+    @Override
+    public String toString() {
+        return name + ":"
+		+ "\n Customers: " + customerCount
+		+ "\n Highest queue length: " + highestQueueLength
+		+ "\n Highest queue duration: " + highestQueueDuration + "s"
+		+ "\n Average queue length (as experienced from customer): " + averageQueueLengh()
+		+ "\n Average total time spent in queue & checkout per customer: " + averageTotalDuration() + "s";
+    }
 }
