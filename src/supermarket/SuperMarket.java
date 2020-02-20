@@ -48,5 +48,12 @@ public class SuperMarket {
         EventSim sim = EventSim.getInstance();
         sim.setup(init);
         sim.run();
+        
+        int test = 0;
+    } 
+
+    public Checkout[] getCheckouts() {
+        return checkouts;
     }
+    
 }

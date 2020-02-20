@@ -5,6 +5,9 @@
  */
 package supermarket;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  *
@@ -19,10 +22,31 @@ public class Checkout {
 
     SuperMarket shop;
     String name;
+    Queue<Customer> queue;
+    
+    int highestQueueLength;
+    int customerCount;
+    int totalQueueDuration;
+    int totalCheckoutDuration;
+    int totalQueueLength;
 
 
     public Checkout(SuperMarket shop, int i) {
         this.shop = shop;
         this.name = "Checkout" + i;
+        this.queue = new LinkedList();
     }
+
+    public Queue<Customer> getQueue() {
+        return queue;
+    }
+
+    public static int getPROD_DURATION() {
+        return PROD_DURATION;
+    }
+
+    public static int getPAY_DURATION() {
+        return PAY_DURATION;
+    }
+    
 }

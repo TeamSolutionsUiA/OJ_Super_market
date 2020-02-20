@@ -7,6 +7,7 @@ package supermarket;
 
 import eventsim.Event;
 import eventsim.EventSim;
+import java.util.Queue;
 
 
 /**
@@ -27,8 +28,28 @@ public class EndShoppingEvent extends Event {
 
     @Override
     public Event happen() {
-        customer.leaveTime = customer.checkoutTime + customer.checkoutDuration;
-        return null;
+        //customer.leaveTime = customer.checkoutTime + customer.checkoutDuration;
+        //return null;
+        // Velge kø:
+        Checkout[] checkouts = customer.shop.getCheckouts();
+        int minQueueLength = 999;
+        Checkout chosenCheckout = null;
+        
+        for(Checkout item : checkouts) {
+            Queue<Customer> queue = item.getQueue();
+            if(queue.size() < minQueueLength){
+                minQueueLength = queue.size();
+                chosenCheckout = item;
+            }
+        }
+        // Kunde legges inn i chekout kø.
+        chosenCheckout.getQueue().add(customer);
+        
+        if(minQueueLength == 0){
+            return new CheckoutEvent(chosenCheckout, getTime() + 1);
+        }
+        else return null;
+         
     }
 
 
@@ -37,5 +58,5 @@ public class EndShoppingEvent extends Event {
         return "EndShoppingEvent{" + getTime() + " cust=" + customer.name
                 + " " + customer.shoppingDuration + '}';
     }
-
+    
 }

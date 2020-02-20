@@ -31,15 +31,36 @@ public class CheckoutEvent extends Event {
 
     @Override
     public Event happen() {
+        // Sjekke kølengden og oppdatere høyeste kølengde.:
+        int queueLength = checkout.queue.size();
+        if(queueLength > checkout.highestQueueLength){
+            checkout.highestQueueLength = queueLength;
+        }
+        checkout.totalQueueLength += queueLength;
+        
+        checkout.customerCount++;
+        
         Customer customer = checkout.queue.poll();
+        customer.queueWaitDuration = getTime() - customer.endShoppingTime;
+        customer.checkoutDuration = customer.numProducts * Checkout.PROD_DURATION + Checkout.PAY_DURATION;
+        customer.checkoutTime = getTime() + customer.checkoutDuration;
+        customer.leaveTime = customer.checkoutTime + 10;
+        
+        checkout.totalQueueDuration += customer.queueWaitDuration;
+        checkout.totalCheckoutDuration += customer.checkoutDuration;
+        
+        if(!checkout.queue.isEmpty()){
+            return new CheckoutEvent(checkout, customer.checkoutTime + 1);
+        }
         
         return null;
+        
     }
 
 
     @Override
     public String toString() {
-        
+      return "bø";  
     }
 
 }
