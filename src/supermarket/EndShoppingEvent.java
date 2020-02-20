@@ -21,13 +21,17 @@ public class EndShoppingEvent extends Event {
 
 
     public EndShoppingEvent(Customer customer) {
-        super(EventSim.getClock() + customer.shoppingDuration);
+        super(customer.endShoppingTime);
         this.customer = customer;
     }
 
 
     @Override
     public Event happen() {
+	if (customer.numProducts == 0) {
+	    customer.leaveTime = getTime() + 1;
+	    return null;
+	}
         //customer.leaveTime = customer.checkoutTime + customer.checkoutDuration;
         //return null;
         // Velge kø:
@@ -37,15 +41,21 @@ public class EndShoppingEvent extends Event {
         
         for(Checkout item : checkouts) {
             Queue<Customer> queue = item.getQueue();
-            if(queue.size() < minQueueLength){
-                minQueueLength = queue.size();
+	    int queueSize = queue.size();
+	    if (item.activeCustomer != null)
+		queueSize++;
+	    
+            if(queueSize < minQueueLength){
+		
+                minQueueLength = queueSize;
                 chosenCheckout = item;
             }
+	    
         }
         // Kunde legges inn i chekout kø.
         chosenCheckout.getQueue().add(customer);
         
-        if(minQueueLength == 0){
+        if(minQueueLength == 0 && chosenCheckout.activeCustomer == null){
             return new CheckoutEvent(chosenCheckout, getTime() + 1);
         }
         else return null;

@@ -31,6 +31,9 @@ public class CheckoutEvent extends Event {
 
     @Override
     public Event happen() {
+	if (checkout.queue.isEmpty())
+	    return null;
+	
         // Sjekke kølengden og oppdatere høyeste kølengde.:
         int queueLength = checkout.queue.size();
         if(queueLength > checkout.highestQueueLength){
@@ -41,6 +44,7 @@ public class CheckoutEvent extends Event {
         checkout.customerCount++;
         
         Customer customer = checkout.queue.poll();
+	checkout.activeCustomer = customer;
         customer.queueWaitDuration = getTime() - customer.endShoppingTime;
         customer.checkoutDuration = customer.numProducts * Checkout.PROD_DURATION + Checkout.PAY_DURATION;
         customer.checkoutTime = getTime() + customer.checkoutDuration;
@@ -49,11 +53,9 @@ public class CheckoutEvent extends Event {
         checkout.totalQueueDuration += customer.queueWaitDuration;
         checkout.totalCheckoutDuration += customer.checkoutDuration;
         
-        if(!checkout.queue.isEmpty()){
-            return new CheckoutEvent(checkout, customer.checkoutTime + 1);
-        }
-        
-        return null;
+	
+	EventSim.getInstance().addEvent(new CheckoutCompletedEvent(customer,checkout));
+        return new CheckoutEvent(checkout, customer.checkoutTime + 1);
         
     }
 

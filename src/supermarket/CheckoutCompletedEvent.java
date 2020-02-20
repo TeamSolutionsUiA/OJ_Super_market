@@ -13,18 +13,21 @@ import eventsim.Event;
  *
  * @author evenal
  */
-public class BeginShoppingEvent extends Event {
+public class CheckoutCompletedEvent extends Event {
     Customer customer;
+    Checkout checkout;
     SuperMarket market;
 
-    public BeginShoppingEvent(Customer customer) {
-        super(customer.beginShoppingTime);
+    public CheckoutCompletedEvent(Customer customer, Checkout checkout) {
+        super(customer.checkoutTime);
         this.customer = customer;
+	this.checkout = checkout;
     }
 
 
     @Override
     public Event happen() {
-        return new EndShoppingEvent(customer);
+	checkout.activeCustomer = null;
+        return null;
     }
 }

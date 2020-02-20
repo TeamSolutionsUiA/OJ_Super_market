@@ -19,7 +19,7 @@ public class EventSim {
     /**
      * The one and only instance, i.e. this is a singleton class
      */
-    private static final EventSim theSim = new EventSim();
+    private static final EventSim theSim = new EventSim(false);
 
     /* The queue of events - those that happen earliest first */
     PriorityQueue<Event> eventQueue;
@@ -29,6 +29,7 @@ public class EventSim {
      */
     int clock;
     Random random;
+    boolean debug;
 
 
     public static EventSim getInstance() {
@@ -53,9 +54,10 @@ public class EventSim {
     }
 
 
-    public EventSim() {
+    public EventSim(boolean debug) {
         eventQueue = new PriorityQueue<>(new EventTimeComparator());
         random = new Random(42);
+	this.debug = debug;
     }
 
 
@@ -64,7 +66,7 @@ public class EventSim {
      *
      * @param initialEvents
      */
-    public void setup(List<Event> initialEvents) {
+    public void setup(Event[] initialEvents) {
         for (Event e : initialEvents)
             eventQueue.add(e);
     }
@@ -88,10 +90,12 @@ public class EventSim {
             Event e = eventQueue.poll();
             clock = e.getTime();
             addEvent(e.happen());
-
-            System.err.format("Time %d: Processing %s. Event queue:\n", clock, e.toString());
-            for (Event qe : eventQueue)
-                System.err.println("     " + qe);
+	
+	    if (debug) {
+		System.err.format("Time %d: Processing %s. Event queue:\n", clock, e.toString());
+		for (Event qe : eventQueue)
+		    System.err.println("     " + qe);
+	    }
         }
     }
 }
