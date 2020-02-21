@@ -10,7 +10,7 @@ import eventsim.EventSim;
 
 /**
  *
- * @author evenal
+ * @author evenal, Jonathan & Ole Christian
  */
 public class Customer {
     // customer will pick a random number of products between these two values
@@ -42,7 +42,7 @@ public class Customer {
         numProducts = EventSim.nextInt(MIN_PRODUCTS, MAX_PRODUCTS);
         shoppingDuration = EventSim.nextInt(MIN_SHOP_TIME, MAX_SHOP_TIME);
 	
-	
+	//gi en tilfeldig tid fra åpningstid frem til stengetid (minus hvor lang tid kunden bruker i butikken, slik at alle kundene når en kasse-kø innen stengetid)
 	beginShoppingTime = EventSim.nextInt(0,SuperMarket.SHOP_OPEN_DURATION - shoppingDuration);
 	
         endShoppingTime = beginShoppingTime + shoppingDuration;

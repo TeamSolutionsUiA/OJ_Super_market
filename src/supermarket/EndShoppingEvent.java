@@ -12,9 +12,9 @@ import java.util.Queue;
 
 /**
  * A customer finishes shopping and heads for the checkout with the shortest
- * queue
+ * queue. Registers a checkoutEvent if the chosen checkout is inactive (no customers)
  *
- * @author evenal
+ * @author evenal, Jonathan & Ole Christian
  */
 public class EndShoppingEvent extends Event {
     Customer customer;
@@ -28,25 +28,26 @@ public class EndShoppingEvent extends Event {
 
     @Override
     public Event happen() {
+	//hvis kunden har null produkter, ikke legg kunden inn i en kø. Avslutt event
 	if (customer.numProducts == 0) {
 	    customer.leaveTime = getTime() + 1;
 	    return null;
 	}
-        //customer.leaveTime = customer.checkoutTime + customer.checkoutDuration;
-        //return null;
+        
         // Velge kø:
-        Checkout[] checkouts = customer.shop.getCheckouts();
         int minQueueLength = 999;
         Checkout chosenCheckout = null;
-        
-        for(Checkout item : checkouts) {
+	
+        for(Checkout item : customer.shop.checkouts) {
             Queue<Customer> queue = item.getQueue();
 	    int queueSize = queue.size();
+	    
+	    //tell med kunden i kassen:
 	    if (item.activeCustomer != null)
 		queueSize++;
 	    
+	    //velg kasse med korteste kø
             if(queueSize < minQueueLength){
-		
                 minQueueLength = queueSize;
                 chosenCheckout = item;
             }
@@ -55,6 +56,7 @@ public class EndShoppingEvent extends Event {
         // Kunde legges inn i chekout kø.
         chosenCheckout.getQueue().add(customer);
         
+	//hvis kassen er helt tom for andre kunder må en checkoutEvent lages for å "kickstarte" checkout event loopen
         if(minQueueLength == 0 && chosenCheckout.activeCustomer == null){
             return new CheckoutEvent(chosenCheckout, getTime() + 1);
         }

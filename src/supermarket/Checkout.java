@@ -11,7 +11,7 @@ import java.util.Queue;
 
 /**
  *
- * @author evenal
+ * @author evenal, Jonathan & OC
  */
 public class Checkout {
     // amount of time per prouct (to scan barcode)
