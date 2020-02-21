@@ -33,7 +33,9 @@ public class CheckoutEvent extends Event {
 	if (checkout.queue.isEmpty())
 	    return null; //the queue is empty, nothing to proccess
 	
-        // Sjekke kølengden og oppdatere høyeste kølengde.:
+	Customer customer = checkout.queue.poll();
+	
+        // Sjekke kølengden og oppdatere høyesoppdaterete kølengde.:
         int queueLength = checkout.queue.size();
         if(queueLength > checkout.highestQueueLength){
             checkout.highestQueueLength = queueLength;
@@ -42,7 +44,7 @@ public class CheckoutEvent extends Event {
         
         checkout.customerCount++;
         
-        Customer customer = checkout.queue.poll();
+        
 	checkout.activeCustomer = customer;
         customer.queueWaitDuration = getTime() - customer.endShoppingTime;
         customer.checkoutDuration = customer.numProducts * Checkout.PROD_DURATION + Checkout.PAY_DURATION;

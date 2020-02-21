@@ -73,6 +73,6 @@ public class Checkout {
 		+ "\n Highest queue length: " + highestQueueLength
 		+ "\n Highest queue duration: " + highestQueueDuration + "s"
 		+ "\n Average queue length (as experienced from customer): " + averageQueueLengh()
-		+ "\n Average total time spent in queue & checkout per customer: " + averageTotalDuration() + "s";
+		+ "\n Average total time spent in queue per customer: " + averageQueueDuration()+ "s";
     }
 }

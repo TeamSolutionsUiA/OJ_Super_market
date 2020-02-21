@@ -30,4 +30,9 @@ public class CheckoutCompletedEvent extends Event {
 	checkout.activeCustomer = null;
         return null;
     }
+    
+    @Override
+    public String toString() {
+      return "CheckoutCompletedEvent: customer left " + checkout.name;  
+    }
 }

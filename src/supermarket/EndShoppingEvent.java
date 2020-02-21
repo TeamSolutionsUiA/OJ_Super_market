@@ -18,7 +18,7 @@ import java.util.Queue;
  */
 public class EndShoppingEvent extends Event {
     Customer customer;
-
+    
 
     public EndShoppingEvent(Customer customer) {
         super(customer.endShoppingTime);
@@ -65,8 +65,7 @@ public class EndShoppingEvent extends Event {
 
     @Override
     public String toString() {
-        return "EndShoppingEvent{" + getTime() + " cust=" + customer.name
-                + " " + customer.shoppingDuration + '}';
+        return "EndShoppingEvent: " + customer;
     }
     
 }

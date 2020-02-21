@@ -25,7 +25,7 @@ public class SuperMarket {
     }
 
     public static final int NUM_CHECKOUTS = 3;
-    public static final int NUM_CUSTOMERS = 700;
+    public static final int NUM_CUSTOMERS = 900;
     public static final int SHOP_OPEN_DURATION = 60*60*12; //butikken er åpen i 12 timer målt i sekunder
 
     Checkout[] checkouts;
@@ -65,14 +65,14 @@ public class SuperMarket {
 	    checkoutCustomerCount += c.customerCount;
 	    highestQueueLength = Math.max(c.highestQueueLength, highestQueueLength);
 	    
-	    totalWaitDuration += c.totalCheckoutDuration + c.totalQueueDuration;
+	    totalWaitDuration +=  c.totalQueueDuration;
 	}
 	
 	System.out.println("-----------------------------------------");
 	System.out.println("Aggregated stats on the supermarket as a whole:"
 		+ "\n Customers with 0 products: " + (NUM_CUSTOMERS - checkoutCustomerCount)
 		+ "\n Highest queue length: " + highestQueueLength
-		+ "\n Customer average wait duration (time spent queueing & checkout combined): " + ((float)totalWaitDuration/checkoutCustomerCount)
+		+ "\n Customer average wait duration (time spent queueing, checkout duration not included): " + ((float)totalWaitDuration/checkoutCustomerCount)
 	);
     }
 

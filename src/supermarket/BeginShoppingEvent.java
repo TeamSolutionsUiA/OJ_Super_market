@@ -27,4 +27,9 @@ public class BeginShoppingEvent extends Event {
     public Event happen() {
         return new EndShoppingEvent(customer);
     }
+    
+    @Override
+    public String toString() {
+      return "BeginShoppingEvent: new customer: " + customer.toString();  
+    }
 }

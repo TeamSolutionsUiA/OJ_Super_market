@@ -37,7 +37,7 @@ public class Customer {
 
     public Customer(SuperMarket shop, int i) {
         this.shop = shop;
-        name = "Cust" + i;
+        name = "Customer " + i;
         
         numProducts = EventSim.nextInt(MIN_PRODUCTS, MAX_PRODUCTS);
         shoppingDuration = EventSim.nextInt(MIN_SHOP_TIME, MAX_SHOP_TIME);
@@ -46,5 +46,10 @@ public class Customer {
 	beginShoppingTime = EventSim.nextInt(0,SuperMarket.SHOP_OPEN_DURATION - shoppingDuration);
 	
         endShoppingTime = beginShoppingTime + shoppingDuration;
+    }
+    
+    @Override
+    public String toString() {
+        return name + " (" + numProducts + " produkter, " + shoppingDuration + "s)";
     }
 }
