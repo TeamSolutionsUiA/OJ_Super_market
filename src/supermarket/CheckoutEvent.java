@@ -51,7 +51,8 @@ public class CheckoutEvent extends Event {
 	checkout.highestQueueDuration = Math.max(checkout.highestQueueDuration, customer.queueWaitDuration);
         checkout.totalQueueDuration += customer.queueWaitDuration;
         checkout.totalCheckoutDuration += customer.checkoutDuration;
-        
+        checkout.activeCheckoutDuration += customer.checkoutDuration;
+	
 	
 	EventSim.getInstance().addEvent(new CheckoutCompletedEvent(customer,checkout));
         return new CheckoutEvent(checkout, customer.checkoutTime + 1);

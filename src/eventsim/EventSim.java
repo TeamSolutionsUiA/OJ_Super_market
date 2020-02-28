@@ -89,8 +89,8 @@ public class EventSim {
             Event e = eventQueue.poll();
             clock = e.getTime();
             addEvent(e.happen());
-	    
-	    System.out.format("Time %d: %s \n", clock, e.toString());
+	    if (debug)
+		System.out.format("Time %d: %s \n", clock, e.toString());
         }
     }
 }

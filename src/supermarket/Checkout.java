@@ -31,6 +31,7 @@ public class Checkout {
     int totalCheckoutDuration;
     int totalQueueLength;
     int highestQueueDuration;
+    int activeCheckoutDuration;
 
     public Checkout(SuperMarket shop, int i) {
         this.shop = shop;
@@ -50,12 +51,17 @@ public class Checkout {
 	return (float) totalQueueDuration / customerCount;
     }
     
+    
     public float averageCheckoutDuration() {
 	return (float) totalCheckoutDuration / customerCount;
     }
     
     public float averageTotalDuration() {
 	return (float) (totalQueueDuration + totalCheckoutDuration) / customerCount;
+    }
+    
+    public float checkoutUtilization() {
+	return (float) 100 * activeCheckoutDuration / SuperMarket.SHOP_OPEN_DURATION;
     }
     
     public static int getPROD_DURATION() {
@@ -73,6 +79,7 @@ public class Checkout {
 		+ "\n Highest queue length: " + highestQueueLength
 		+ "\n Highest queue duration: " + highestQueueDuration + "s"
 		+ "\n Average queue length (as experienced from customer): " + averageQueueLengh()
-		+ "\n Average total time spent in queue per customer: " + averageQueueDuration()+ "s";
+		+ "\n Average total time spent in queue per customer: " + averageQueueDuration()+ "s"
+		+ "\n Checkout utilization: " + Math.round(checkoutUtilization())+ "%";
     }
 }

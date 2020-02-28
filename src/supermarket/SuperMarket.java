@@ -57,12 +57,14 @@ public class SuperMarket {
 	int checkoutCustomerCount = 0;
 	int highestQueueLength = 0;
 	int totalWaitDuration = 0;
+	
 	for (Checkout c : checkouts) {
 	    System.out.println(c);
 	    checkoutCustomerCount += c.customerCount;
 	    highestQueueLength = Math.max(c.highestQueueLength, highestQueueLength);
 	    
 	    totalWaitDuration +=  c.totalQueueDuration;
+	    
 	}
 	
 	System.out.println("-----------------------------------------");
