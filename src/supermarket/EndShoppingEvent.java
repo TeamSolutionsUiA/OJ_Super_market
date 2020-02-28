@@ -6,7 +6,6 @@
 package supermarket;
 
 import eventsim.Event;
-import eventsim.EventSim;
 import java.util.Queue;
 
 

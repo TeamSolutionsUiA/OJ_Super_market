@@ -7,9 +7,6 @@ package supermarket;
 
 import eventsim.Event;
 import eventsim.EventSim;
-import supermarket.Checkout;
-import supermarket.Customer;
-
 
 /**
  * Pops the first Customer from Queue in Checkout, and calculates duration of checkout for customer.

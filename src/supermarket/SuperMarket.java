@@ -7,9 +7,6 @@ package supermarket;
 
 import eventsim.Event;
 import eventsim.EventSim;
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  *
