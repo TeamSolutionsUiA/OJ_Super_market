@@ -72,10 +72,5 @@ public class SuperMarket {
 		+ "\n Customer average wait duration (time spent queueing, checkout duration not included): " + ((float)totalWaitDuration/checkoutCustomerCount)
 	);
     }
-
-    public Checkout[] getCheckouts() {
-        return checkouts;
-    }
-    
 }
  
